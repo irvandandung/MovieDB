@@ -1,169 +1,111 @@
-
 package com.example.user.moviedb.model;
+
+import android.os.Parcel;
+import android.os.Parcelable;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
-public class modelMovie implements Serializable
+public class modelMovie implements Parcelable
 {
 
-    @SerializedName("vote_count")
+    @SerializedName("results")
     @Expose
-    private Integer voteCount;
-    @SerializedName("id")
+    private List<Result> results = null;
+    @SerializedName("page")
     @Expose
-    private Integer id;
-    @SerializedName("video")
+    private Integer page;
+    @SerializedName("total_results")
     @Expose
-    private Boolean video;
-    @SerializedName("vote_average")
+    private Integer totalResults;
+    @SerializedName("dates")
     @Expose
-    private Double voteAverage;
-    @SerializedName("title")
+    private Date dates;
+    @SerializedName("total_pages")
     @Expose
-    private String title;
-    @SerializedName("popularity")
-    @Expose
-    private Double popularity;
-    @SerializedName("poster_path")
-    @Expose
-    private String posterPath;
-    @SerializedName("original_language")
-    @Expose
-    private String originalLanguage;
-    @SerializedName("original_title")
-    @Expose
-    private String originalTitle;
-    @SerializedName("genre_ids")
-    @Expose
-    private List<Integer> genreIds = null;
-    @SerializedName("backdrop_path")
-    @Expose
-    private String backdropPath;
-    @SerializedName("adult")
-    @Expose
-    private Boolean adult;
-    @SerializedName("overview")
-    @Expose
-    private String overview;
-    @SerializedName("release_date")
-    @Expose
-    private String releaseDate;
-    private final static long serialVersionUID = -7418995350820055298L;
+    private Integer totalPages;
+    public final static Creator<modelMovie> CREATOR = new Creator<modelMovie>() {
 
-    public Integer getVoteCount() {
-        return voteCount;
+
+        @SuppressWarnings({
+                "unchecked"
+        })
+        public modelMovie createFromParcel(Parcel in) {
+            return new modelMovie(in);
+        }
+
+        public modelMovie[] newArray(int size) {
+            return (new modelMovie[size]);
+        }
+
+    }
+            ;
+
+    protected modelMovie(Parcel in) {
+        in.readList(this.results, (Result.class.getClassLoader()));
+        this.page = ((Integer) in.readValue((Integer.class.getClassLoader())));
+        this.totalResults = ((Integer) in.readValue((Integer.class.getClassLoader())));
+        this.dates = ((Date) in.readValue((Date.class.getClassLoader())));
+        this.totalPages = ((Integer) in.readValue((Integer.class.getClassLoader())));
     }
 
-    public void setVoteCount(Integer voteCount) {
-        this.voteCount = voteCount;
+    public modelMovie() {
     }
 
-    public Integer getId() {
-        return id;
+    public List<Result> getResults() {
+        return results;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
+    public void setResults(List<Result> results) {
+        this.results = results;
     }
 
-    public Boolean getVideo() {
-        return video;
+    public Integer getPage() {
+        return page;
     }
 
-    public void setVideo(Boolean video) {
-        this.video = video;
+    public void setPage(Integer page) {
+        this.page = page;
     }
 
-    public Double getVoteAverage() {
-        return voteAverage;
+    public Integer getTotalResults() {
+        return totalResults;
     }
 
-    public void setVoteAverage(Double voteAverage) {
-        this.voteAverage = voteAverage;
+    public void setTotalResults(Integer totalResults) {
+        this.totalResults = totalResults;
     }
 
-    public String getTitle() {
-        return title;
+    public Date getDates() {
+        return dates;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setDates(Date dates) {
+        this.dates = dates;
     }
 
-    public Double getPopularity() {
-        return popularity;
+    public Integer getTotalPages() {
+        return totalPages;
     }
 
-    public void setPopularity(Double popularity) {
-        this.popularity = popularity;
+    public void setTotalPages(Integer totalPages) {
+        this.totalPages = totalPages;
     }
 
-    public String getPosterPath() {
-        return posterPath;
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeList(results);
+        dest.writeValue(page);
+        dest.writeValue(totalResults);
+        dest.writeValue(dates);
+        dest.writeValue(totalPages);
     }
 
-    public void setPosterPath(String posterPath) {
-        this.posterPath = posterPath;
+    public int describeContents() {
+        return  0;
     }
 
-    public String getOriginalLanguage() {
-        return originalLanguage;
-    }
-
-    public void setOriginalLanguage(String originalLanguage) {
-        this.originalLanguage = originalLanguage;
-    }
-
-    public String getOriginalTitle() {
-        return originalTitle;
-    }
-
-    public void setOriginalTitle(String originalTitle) {
-        this.originalTitle = originalTitle;
-    }
-
-    public List<Integer> getGenreIds() {
-        return genreIds;
-    }
-
-    public void setGenreIds(List<Integer> genreIds) {
-        this.genreIds = genreIds;
-    }
-
-    public String getBackdropPath() {
-        return backdropPath;
-    }
-
-    public void setBackdropPath(String backdropPath) {
-        this.backdropPath = backdropPath;
-    }
-
-    public Boolean getAdult() {
-        return adult;
-    }
-
-    public void setAdult(Boolean adult) {
-        this.adult = adult;
-    }
-
-    public String getOverview() {
-        return overview;
-    }
-
-    public void setOverview(String overview) {
-        this.overview = overview;
-    }
-
-    public String getReleaseDate() {
-        return releaseDate;
-    }
-
-    public void setReleaseDate(String releaseDate) {
-        this.releaseDate = releaseDate;
-    }
 
 }

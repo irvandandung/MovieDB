@@ -7,9 +7,7 @@ import retrofit2.http.GET;
 import retrofit2.http.Query;
 
 
-public class interfaceapi {
+public interface interfaceapi {
     @GET("movie/popular")
-    public Call<modelMovie>getPopularMovies(@Query("api_key") String apikey) {
-        return null;
-    }
+    Call<modelMovie> getPopularMovies(@Query("api_key") String apikey);
 }

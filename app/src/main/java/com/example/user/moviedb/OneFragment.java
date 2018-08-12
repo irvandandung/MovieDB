@@ -3,18 +3,18 @@ package com.example.user.moviedb;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.user.moviedb.adapter.adapterMovie;
 import com.example.user.moviedb.api.client;
 import com.example.user.moviedb.api.interfaceapi;
+import com.example.user.moviedb.model.Result;
 import com.example.user.moviedb.model.modelMovie;
 
 import java.util.ArrayList;
@@ -26,10 +26,11 @@ import retrofit2.Response;
 
 public class OneFragment extends Fragment{
     private RecyclerView mRecyclerView;
+    ProgressBar progressBar;
     private RecyclerView.LayoutManager mLayoutManager;
-    private List<modelMovie> movieList = new ArrayList<com.example.user.moviedb.model.modelMovie>();
-    private RecyclerView recyclerView;
+    private List<Result> movieList = new ArrayList<Result>();
     private adapterMovie mAdapter;
+    String whoops;
     public OneFragment() {
         // Required empty public constructor
     }
@@ -40,19 +41,17 @@ public class OneFragment extends Fragment{
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_one, container, false);
         mRecyclerView = (RecyclerView) v.findViewById(R.id.my_recycler_view1);
+        whoops = String.format(getResources().getString(R.string.whoops));
 
-        // use this setting to improve performance if you know that changes
-        // in content do not change the layout size of the RecyclerView
-        mRecyclerView.setHasFixedSize(true);
 
-        // use a linear layout manager
-        mLayoutManager = new LinearLayoutManager(getContext());
-        mRecyclerView.setLayoutManager(mLayoutManager);
-
-        // specify an adapter (see also next example)
-        mAdapter = new adapterMovie(movieList);
-        mRecyclerView.setAdapter(mAdapter);
-        mRecyclerView.setItemAnimator(new DefaultItemAnimator());
+//        mRecyclerView.setHasFixedSize(true);
+//
+//
+//        mLayoutManager = new LinearLayoutManager(getContext());
+//        mRecyclerView.setLayoutManager(mLayoutManager);
+//
+//
+//        mRecyclerView.setAdapter(mAdapter);
 
         loadJson();
         return v;
@@ -66,13 +65,18 @@ public class OneFragment extends Fragment{
         call.enqueue(new Callback<modelMovie>() {
             @Override
             public void onResponse(Call<modelMovie> call, Response<modelMovie> response) {
-
+                progressBar.setVisibility(View.GONE);
+                movieList = response.body().getResults();
+                mAdapter = new adapterMovie(getContext(),movieList);
+                mRecyclerView.setAdapter(mAdapter);
+                mLayoutManager = new LinearLayoutManager(getContext());
+                mRecyclerView.setLayoutManager(mLayoutManager);
+                mRecyclerView.setHasFixedSize(true);
             }
 
             @Override
             public void onFailure(Call<modelMovie> call, Throwable t) {
-                Log.d("Error", t.getMessage());
-                Toast.makeText(getActivity(), "Error Fetching Data!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), whoops, Toast.LENGTH_SHORT).show();
             }
         });
     }

@@ -26,11 +26,12 @@ import retrofit2.Response;
 
 public class OneFragment extends Fragment{
     private RecyclerView mRecyclerView;
-    ProgressBar progressBar;
+    private RecyclerView.Adapter mAdapter;
     private RecyclerView.LayoutManager mLayoutManager;
     private List<Result> movieList = new ArrayList<Result>();
-    private adapterMovie mAdapter;
+    ProgressBar progressBar;
     String whoops;
+
     public OneFragment() {
         // Required empty public constructor
     }
@@ -40,6 +41,7 @@ public class OneFragment extends Fragment{
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_one, container, false);
+        progressBar = v.findViewById(R.id.progress_bar);
         mRecyclerView = (RecyclerView) v.findViewById(R.id.my_recycler_view1);
         whoops = String.format(getResources().getString(R.string.whoops));
 
@@ -65,13 +67,13 @@ public class OneFragment extends Fragment{
         call.enqueue(new Callback<modelMovie>() {
             @Override
             public void onResponse(Call<modelMovie> call, Response<modelMovie> response) {
-                progressBar.setVisibility(View.GONE);
                 movieList = response.body().getResults();
+                progressBar.setVisibility(View.GONE);
                 mAdapter = new adapterMovie(getContext(),movieList);
                 mRecyclerView.setAdapter(mAdapter);
                 mLayoutManager = new LinearLayoutManager(getContext());
                 mRecyclerView.setLayoutManager(mLayoutManager);
-                mRecyclerView.setHasFixedSize(true);
+//                mRecyclerView.setHasFixedSize(true);
             }
 
             @Override

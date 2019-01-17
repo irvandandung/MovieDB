@@ -31,12 +31,14 @@ public class MainActivity extends AppCompatActivity {
 
         tabLayout = (TabLayout) findViewById(R.id.tab_layout);
         tabLayout.setupWithViewPager(viewPager);
+
+//        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
     private void setupViewPager(ViewPager viewPager) {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        adapter.addFragment(new OneFragment(), "ONE");
-        adapter.addFragment(new TwoFragment(), "TWO");
-        adapter.addFragment(new ThreeFragment(), "THREE");
+        adapter.addFragment(new OneFragment(), "POPULAR");
+        adapter.addFragment(new TwoFragment(), "TOP RATED");
+        adapter.addFragment(new ThreeFragment(), "NOW PLAYING");
         viewPager.setAdapter(adapter);
     }
 

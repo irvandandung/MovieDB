@@ -13,7 +13,6 @@ import java.util.List;
 
 public class Result implements Parcelable
 {
-
     @SerializedName("vote_count")
     @Expose
     private Integer voteCount;
